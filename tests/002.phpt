@@ -5,7 +5,7 @@ Check for call user function and execute timeout
 --FILE--
 <?php
 function called_func(){
-    sleep(2);
+    sleep(1);
     echo "called_func without params and return\n";
 }
 

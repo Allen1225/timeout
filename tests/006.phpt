@@ -5,7 +5,7 @@ Check for call user function with reference param and execute timeout
 --FILE--
 <?php
 function called_func(&$id){
-    sleep(2);
+    sleep(1);
     $id = 1024;
     return "called_func retval";
 }

@@ -159,6 +159,7 @@ PHP_TIMEOUT_API int timeout_execute_with_params(zval *call_func, HashTable *args
 	zend_fcall_info fci;
 	zval _retval;
 	zval obj;
+	zend_object *pre_obj;
 	uint32_t params_count = zend_hash_num_elements(args);
 	zval params[params_count];
 
@@ -188,10 +189,15 @@ PHP_TIMEOUT_API int timeout_execute_with_params(zval *call_func, HashTable *args
 		call_ret = TT_SET_FUNCTION_CALL_INFO_ERROR;
 		goto CLEAN;
 	}
+	pre_obj = fci.object;
 
 	if(zend_call_function(&fci, NULL) == FAILURE) {
 		call_ret = TT_FUNCTION_CALL_FAILURE;
 		goto CLEAN;
+	}
+
+	if(pre_obj != fci.object){
+		zval_ptr_dtor(&obj);
 	}
 
 	if(!retval && (&_retval)){
@@ -201,7 +207,7 @@ PHP_TIMEOUT_API int timeout_execute_with_params(zval *call_func, HashTable *args
 	call_ret = TT_CALL_FUNCTION_SUCC;
 
 CLEAN:
-	if(&obj && fci.object){
+	if(fci.object){
 		zval_ptr_dtor(&obj);
 	}
 	zval_ptr_dtor(&fci.function_name);
@@ -219,6 +225,7 @@ PHP_TIMEOUT_API int timeout_execute_with_0_params(zval *call_func, zval *retval)
 	int call_ret;
 	zend_fcall_info fci;
 	zval obj;
+	zend_object *pre_obj;
 	zval _retval;
 
 	fci.size = sizeof(fci);
@@ -238,10 +245,15 @@ PHP_TIMEOUT_API int timeout_execute_with_0_params(zval *call_func, zval *retval)
 		call_ret = TT_SET_FUNCTION_CALL_INFO_ERROR;
 		goto CLEAN;
 	}
+	pre_obj = fci.object;
 
 	if(zend_call_function(&fci, NULL) == FAILURE) {
 		call_ret = TT_FUNCTION_CALL_FAILURE;
 		goto CLEAN;
+	}
+
+	if(pre_obj != fci.object){
+		zval_ptr_dtor(&obj);
 	}
 
 	if(!retval && &_retval){
@@ -250,7 +262,7 @@ PHP_TIMEOUT_API int timeout_execute_with_0_params(zval *call_func, zval *retval)
 	call_ret = TT_CALL_FUNCTION_SUCC;
 
 CLEAN:
-	if(&obj && fci.object){
+	if(fci.object){
 		zval_ptr_dtor(&obj);
 	}
 	zval_ptr_dtor(&fci.function_name);

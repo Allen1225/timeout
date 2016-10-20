@@ -5,7 +5,7 @@ Check for call user function with reture value and execute timeout
 --FILE--
 <?php
 function called_func(){
-    sleep(2);
+    sleep(1);
     return "called_func retval";
 }
 
