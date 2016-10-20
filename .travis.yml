@@ -13,10 +13,6 @@ php:
 notifications:
   email: qp2624@163.com
    
-env:
-  - REPORT_EXIT_STATUS=1 NO_INTERACTION=1
-
-#Compile
 before_script:
     - ./travis/compile.sh
 
