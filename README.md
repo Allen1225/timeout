@@ -43,7 +43,7 @@
 
 ### Demo
 
-   <?php
+    <?php
 
     class sync {
 
