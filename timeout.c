@@ -25,7 +25,7 @@
 #include "php_ini.h"
 #include "ext/standard/info.h"
 #include "php_timeout.h"
-//#include "timeout_signal.h"
+#include "timeout_signal.h"
 
 static int le_timeout;
 
