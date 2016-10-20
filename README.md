@@ -1,6 +1,9 @@
 # PHP函数执行超时控制扩展 (For PHP7+)
 控制PHP函数的执行时间，超时终止执行，支持毫秒级配置，在call_user_func()基础上加了超时控制机制。
 
+### 版本
+    v1.0.0
+
 ### 环境&依赖
 * OS: linux
 * Version: PHP 7.0.0及以上
@@ -80,8 +83,21 @@
     }
     ?>
 
-    ==========================================
+执行结果：
+
     sync::send() return value:
     call function timeout
      
+如果将sleep(2)注释掉则输出：
+    
+    Array
+    (
+        [a] => 1
+        [b] => 2
+        [c] => 3
+        [d] => 4
+    )
+    sync::send() return value:1024
+    call function success 
+
 
