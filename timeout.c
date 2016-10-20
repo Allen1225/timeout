@@ -322,6 +322,7 @@ END:
 /*}}}*/
 
 /*{{{ proto int call_func_with_timeout(mixed callable, int interval [, array args [, mixed retval]])
+ * control PHP function's excution time
  */
 PHP_FUNCTION(call_func_with_timeout)
 {
