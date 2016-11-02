@@ -17,7 +17,7 @@ v1.0.0
 
 ### 函数
     
-    int call_func_with_timeout(mixed callable, int interval [, array args [, mixed retval]]
+    int *call_func_with_timeout*(mixed callable, int interval [, array args [, mixed retval]]
 
     Parames：
     $callable array|string 调用函数名称，普通function传函数名，类方法传数组:array(class|object, method)
