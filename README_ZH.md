@@ -1,4 +1,4 @@
-# PHP extension to control function's excution time (For PHP7+)
+# PHP函数执行超时控制扩展 (For PHP7+)
 [![Build Status](https://travis-ci.org/pangudashu/timeout.svg?branch=master)](https://travis-ci.org/pangudashu/timeout)
 
 控制PHP函数的执行时间，超时终止执行，支持毫秒级配置，在call_user_func()基础上加了超时控制机制。
