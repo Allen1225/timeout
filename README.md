@@ -1,6 +1,8 @@
 # PHP extension to control function's excution time (For PHP7+)
 [![Build Status](https://travis-ci.org/pangudashu/timeout.svg?branch=master)](https://travis-ci.org/pangudashu/timeout)
 
+[![中文]](https://github.com/pangudashu/timeout/blob/master/README_ZH.md)
+
 It's an extension to control PHP function's excution time.In fact,it just have one function:call_func_with_timeout() which similar to function `call_user_func()`.I add timeout control to it.
 
 Why written this extesion?In my work,I find many circumstances that function executed long time and block the process,so I need a method to control the execution time of function.
@@ -28,7 +30,7 @@ int call_func_with_timeout(mixed callable, int interval [, array args [, mixed r
 
 Parames：
 
-$callable array|string  [required]  //call function name，普通function传函数名，类方法传数组:array(class|object, method)
+$callable array|string  [required]  //call function name or array(class|object, method)
 $interval int           [required]  //timeout interval，unit:ms
 $args     array         [optional]  //function request args
 $retval   mixed         [optional]
