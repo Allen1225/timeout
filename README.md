@@ -1,39 +1,50 @@
 # PHP extension to control function's excution time (For PHP7+)
 [![Build Status](https://travis-ci.org/pangudashu/timeout.svg?branch=master)](https://travis-ci.org/pangudashu/timeout)
 
-控制PHP函数的执行时间，超时终止执行，支持毫秒级配置，在call_user_func()基础上加了超时控制机制。
+It's an extension to control PHP function's excution time.In fact,it just have one function:call_func_with_timeout() which similar to function `call_user_func()`.I add timeout control to it.
 
-### 版本
+Why written this extesion?In my work,I find many circumstances that function executed long time and block the process,so I need a method to control the execution time of function.
+
+When call a function, we can set timeout on it and it will be forced stoped if it's still in executing over the limit time.
+
+This exetension use sigsetjmp() and siglongjmp() to implement the jump of running stack which like PHP's `try-catch` implement.
+
+### Version
 v1.0.0
 
-### 环境&依赖
+### Environment Requirements
 * OS: linux
-* Version: PHP 7.0.0及以上
+* Version: PHP 7.0.0 or newer
 * SAPI: php-fpm or cli
 
-### 特性
-* 通用：函数级控制超时
-* 支持毫秒级配置
+### Features
+* timeout control on function level
+* support millisecond-level config
 
-### 函数
+### Function
 
-#### int **call_func_with_timeout**(mixed callable, int interval [, array args [, mixed retval]] ####
+```c
+int call_func_with_timeout(mixed callable, int interval [, array args [, mixed retval]]
 
-    Parames：
-    $callable array|string 调用函数名称，普通function传函数名，类方法传数组:array(class|object, method)
-    $interval int          超时时间，单位:ms
-    $args     array        (可选)调用函数的参数数组
-    $retval   mixed        (可选)调用函数的返回值，此值以引用传入
+Parames：
 
-    Return:
-    TT_CALL_FUNCTION_SUCC: 执行成功(未超时)
-    TT_CALL_FUNCTION_TIMEOUT: 执行超时
-    TT_SET_FUNCTION_CALL_INFO_ERROR: 调用函数不合法(如：类或者对象不存在)
-    TT_FUNCTION_CALL_FAILURE: 调用失败(如：方法不存在、调用私有方法等)
-    TT_SET_SIGNAL_ERROR: 设置signal handler错误(系统不支持此扩展)
-    TT_SET_TIMER_ERROR: 同上
+$callable array|string  [required]  //call function name，普通function传函数名，类方法传数组:array(class|object, method)
+$interval int           [required]  //timeout interval，unit:ms
+$args     array         [optional]  //function request args
+$retval   mixed         [optional]
 
-### 安装
+
+Return:[type int]
+
+TT_CALL_FUNCTION_SUCC:           //execute success
+TT_CALL_FUNCTION_TIMEOUT:        //execute timeout
+TT_SET_FUNCTION_CALL_INFO_ERROR: //the function called invalid,eg:class or object not exist
+TT_FUNCTION_CALL_FAILURE:        //execute failed,the same as TT_SET_FUNCTION_CALL_INFO_ERROR,eg:function not exist
+TT_SET_SIGNAL_ERROR:             //set signal handler error
+TT_SET_TIMER_ERROR:              //set timer error
+```
+
+### Install
 
     git clone git@github.com:pangudashu/timeout.git
     cd timeout
@@ -41,7 +52,7 @@ v1.0.0
     ./configure
     make && make install
 
-    add "extension=timeout.so" to php.ini
+    After install, add "extension=timeout.so" to php.ini
 
 ### Demo
 
@@ -85,12 +96,12 @@ v1.0.0
     }
     ?>
 
-执行结果：
+Result output：
 
     sync::send() return value:
     call function timeout
      
-如果将sleep(2)注释掉则输出：
+If annotate `sleep(2)`,result output:
     
     Array
     (
