@@ -14,8 +14,9 @@
 sigjmp_buf invoke_env;
 
 void timeout_signal_handler(int);
-typedef void sigfunc(int);
-sigfunc *my_signal(int, sigfunc*);
 
+typedef void (*Sigfunc)(int);
+
+Sigfunc timeout_set_signal(int signo, Sigfunc func);
 
 #endif /* PHP_TIMEOUT_SIGNAL_H */

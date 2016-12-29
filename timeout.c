@@ -273,12 +273,12 @@ PHP_TIMEOUT_API int call_func_with_timeout(zval *call_func, int interval, HashTa
 {
 	int call_ret;
 
-	sigfunc *sf = timeout_set_signal(SIGALRM, timeout_signal_handler);
+	Sigfunc sf = timeout_set_signal(SIGALRM, timeout_signal_handler);
 	if(sf == SIG_ERR){
 		call_ret = TT_SET_SIGNAL_ERROR;
 		goto END;
 	}
-
+	
 	struct itimerval tick;
 	struct itimerval oldtick;
 	tick.it_value.tv_sec = interval/1000;

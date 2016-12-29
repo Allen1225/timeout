@@ -5,9 +5,12 @@ void timeout_signal_handler(int sig)
 	siglongjmp(invoke_env, 1);
 }
 
-sigfunc* timeout_set_signal(int signo, sigfunc *func)
+Sigfunc timeout_set_signal(int signo, Sigfunc func)
 {
 	struct sigaction act, oact;
+
+    memset (&act, '\0', sizeof (struct sigaction));
+    memset (&oact, '\0', sizeof (struct sigaction));
 
 	act.sa_handler = func;
 	sigemptyset(&act.sa_mask);
@@ -21,8 +24,10 @@ sigfunc* timeout_set_signal(int signo, sigfunc *func)
 		act.sa_flags |= SA_RESTART;
 #endif
 	}
-	if (sigaction(signo, &act, &oact) < 0)
+	if (sigaction(signo, &act, &oact) < 0){
 		return SIG_ERR;
+    }
+
 	return oact.sa_handler;
 }
 
