@@ -23,6 +23,9 @@ v1.0.0
 * timeout control on function level
 * support millisecond-level config
 
+### Note
+current version only support one timmer
+
 ### Function
 
 ```c
